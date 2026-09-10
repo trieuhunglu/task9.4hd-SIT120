@@ -1,16 +1,9 @@
 <script setup>
-defineProps({
-  currentView: {
-    type: String,
-    required: true
-  }
-})
+import { useThemeStore } from '../stores/theme'
+import { useFavouritesStore } from '../stores/favourites'
 
-const emit = defineEmits(['change-view'])
-
-function changeView(view) {
-  emit('change-view', view)
-}
+const themeStore = useThemeStore()
+const favouritesStore = useFavouritesStore()
 </script>
 
 <template>
@@ -18,49 +11,66 @@ function changeView(view) {
     <div class="container header-container">
 
       <div class="logo">
-        <img src="../assets/logo.png" alt="PawConnect Logo">
+        <RouterLink to="/">
+          <img
+            src="../assets/logo.png"
+            alt="PawConnect Logo"
+          >
+        </RouterLink>
       </div>
 
       <nav aria-label="Main navigation">
         <ul>
+
           <li>
-            <button
-              type="button"
-              :class="{ active: currentView === 'home' }"
-              @click="changeView('home')"
+            <RouterLink
+              to="/"
+              class="nav-link"
             >
               Home
-            </button>
+            </RouterLink>
           </li>
 
           <li>
-            <button
-              type="button"
-              :class="{ active: currentView === 'pets' }"
-              @click="changeView('pets')"
+            <RouterLink
+              to="/pets"
+              class="nav-link"
             >
               Meet Our Pets
-            </button>
+            </RouterLink>
           </li>
 
           <li>
-            <button
-              type="button"
-              :class="{ active: currentView === 'care' }"
-              @click="changeView('care')"
+            <RouterLink
+              to="/care"
+              class="nav-link"
             >
               Pet Care
-            </button>
+            </RouterLink>
+          </li>
+
+          <li>
+            <RouterLink
+              to="/contact"
+              class="nav-link"
+            >
+              Contact
+            </RouterLink>
+          </li>
+          <li>
+            <span class="favourites-badge">
+            Favourites: {{ favouritesStore.totalCount }}
+            </span>
           </li>
           <li>
             <button
-            type="button"
-            :class="{ active: currentView === 'contact' }"
-            @click="changeView('contact')"
-        >
-            Contact
+              class="theme-toggle"
+              @click="themeStore.toggleDarkMode"
+            >
+              {{ themeStore.isDarkMode ? '☀️ Light Mode' : '🌙 Dark Mode' }}
             </button>
-        </li>
+          </li>
+
         </ul>
       </nav>
 

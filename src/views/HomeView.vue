@@ -1,9 +1,35 @@
 <script setup>
-const emit = defineEmits(['view-pets'])
+import cat1 from '../assets/cat-1.png'
+import cat2 from '../assets/cat-2.png'
+import cat3 from '../assets/cat-3.png'
+import dog1 from '../assets/dog-1.png'
 
-function goToPets() {
-  emit('view-pets')
-}
+const featuredPets = [
+  {
+    id: 1,
+    name: 'Luna',
+    description: 'Friendly and calm cat looking for a loving home.',
+    image: cat1
+  },
+  {
+    id: 2,
+    name: 'Mochi',
+    description: 'Playful cat who enjoys attention and quiet spaces.',
+    image: cat2
+  },
+  {
+    id: 3,
+    name: 'Oliver',
+    description: 'Gentle companion who enjoys relaxing with people.',
+    image: cat3
+  },
+  {
+    id: 4,
+    name: 'Max',
+    description: 'Active and friendly dog who loves outdoor walks.',
+    image: dog1
+  }
+]
 </script>
 
 <template>
@@ -14,23 +40,22 @@ function goToPets() {
         <h1>Find Your New Best Friend</h1>
 
         <p>
-          PawConnect helps people discover pets that are waiting
-          for a loving and responsible home.
+          PawConnect helps people discover pets looking for loving homes
+          and supports responsible pet adoption.
         </p>
 
-        <button
-          type="button"
+        <RouterLink
+          to="/pets"
           class="btn"
-          @click="goToPets"
         >
           Meet Our Pets
-        </button>
+        </RouterLink>
       </div>
 
       <div class="hero-image">
         <img
           src="../assets/hero.png"
-          alt="Happy adopted pets"
+          alt="Pets waiting for adoption"
         >
       </div>
 
@@ -39,14 +64,13 @@ function goToPets() {
 
   <section class="mission-section">
     <div class="container">
-
       <h2>Our Mission</h2>
 
       <p>
-        Our mission is to increase pet adoption and strengthen
-        community engagement in responsible pet care.
+        Our mission is to increase pet adoption and strengthen community
+        engagement in taking care of pets. PawConnect makes it easier for
+        people to explore available pets and begin their adoption journey.
       </p>
-
     </div>
   </section>
 
@@ -57,19 +81,24 @@ function goToPets() {
 
       <div class="pet-grid">
 
-        <article class="pet-card">
-          <h3>Luna</h3>
-          <p>Friendly and calm cat looking for a loving home.</p>
-        </article>
+        <article
+          v-for="pet in featuredPets"
+          :key="pet.id"
+          class="pet-card"
+        >
+          <img
+            :src="pet.image"
+            :alt="pet.name"
+            class="pet-image"
+          >
 
-        <article class="pet-card">
-          <h3>Mochi</h3>
-          <p>Playful cat who enjoys attention and quiet spaces.</p>
-        </article>
+          <div class="pet-card-content">
+            <h3>{{ pet.name }}</h3>
 
-        <article class="pet-card">
-          <h3>Oliver</h3>
-          <p>Gentle companion who enjoys relaxing with people.</p>
+            <p>
+              {{ pet.description }}
+            </p>
+          </div>
         </article>
 
       </div>

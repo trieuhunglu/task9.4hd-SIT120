@@ -4,8 +4,13 @@ import cat2 from '../assets/cat-2.png'
 import cat3 from '../assets/cat-3.png'
 import dog1 from '../assets/dog-1.png'
 
+import { useFavouritesStore } from '../stores/favourites'
+
+const favouritesStore = useFavouritesStore()
+
 const pets = [
   {
+    id: 1,
     name: 'Luna',
     type: 'Cat',
     age: '2 years old',
@@ -13,20 +18,23 @@ const pets = [
     image: cat1
   },
   {
+    id: 2,
     name: 'Mochi',
     type: 'Cat',
-    age: '1 year old',
+    age: '3 years old',
     description: 'Playful, curious and enjoys attention.',
     image: cat2
   },
   {
+    id: 3,
     name: 'Oliver',
     type: 'Cat',
-    age: '3 years old',
+    age: '3 months old',
     description: 'Gentle and enjoys relaxing with people.',
     image: cat3
   },
   {
+    id: 4,
     name: 'Max',
     type: 'Dog',
     age: '4 years old',
@@ -52,7 +60,7 @@ const pets = [
 
         <article
           v-for="pet in pets"
-          :key="pet.name"
+          :key="pet.id"
           class="pet-card"
         >
           <img
@@ -71,10 +79,46 @@ const pets = [
             <p>
               {{ pet.description }}
             </p>
+
+            <button
+              v-if="!favouritesStore.items.some(item => item.id === pet.id)"
+              class="favourite-btn"
+              @click="favouritesStore.addItem(pet)"
+            >
+              Add to Favourites
+            </button>
+
+            <button
+              v-else
+              class="favourite-btn remove"
+              @click="favouritesStore.removeItem(pet.id)"
+            >
+              Remove Favourite
+            </button>
           </div>
         </article>
 
       </div>
+
+      <section class="favourites-summary">
+        <h2>Your Favourite Pets</h2>
+
+        <p>
+          {{ favouritesStore.formattedSummary }}
+        </p>
+
+        <p>
+          Total selected: {{ favouritesStore.totalCount }}
+        </p>
+
+        <button
+          v-if="favouritesStore.totalCount > 0"
+          class="clear-favourites-btn"
+          @click="favouritesStore.resetStore"
+        >
+          Clear All Favourites
+        </button>
+      </section>
 
     </div>
   </section>
