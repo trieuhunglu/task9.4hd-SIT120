@@ -793,3 +793,13 @@ h3 {
 .dark-theme .favourite-btn.remove {
   background: #c94b47;
 }
+/* Dark mode favourites summary fix */
+.dark-theme .favourites-summary {
+  background-color: #252b27 !important;
+  color: #e5e7eb !important;
+}
+
+.dark-theme .favourites-summary h2,
+.dark-theme .favourites-summary p {
+  color: #e5e7eb !important;
+}
