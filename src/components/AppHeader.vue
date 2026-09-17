@@ -1,13 +1,32 @@
 <script setup>
+import { ref, onMounted, onUnmounted } from 'vue'
+
 import { useThemeStore } from '../stores/theme'
 import { useFavouritesStore } from '../stores/favourites'
 
 const themeStore = useThemeStore()
 const favouritesStore = useFavouritesStore()
+
+const isScrolled = ref(false)
+
+function handleScroll() {
+  isScrolled.value = window.scrollY > 80
+}
+
+onMounted(() => {
+  window.addEventListener('scroll', handleScroll)
+})
+
+onUnmounted(() => {
+  window.removeEventListener('scroll', handleScroll)
+})
 </script>
 
 <template>
-  <header class="site-header">
+  <header
+    class="site-header"
+    :class="{ 'header-scrolled': isScrolled }"
+  >
     <div class="container header-container">
 
       <div class="logo">
@@ -21,7 +40,6 @@ const favouritesStore = useFavouritesStore()
 
       <nav aria-label="Main navigation">
         <ul>
-
           <li>
             <RouterLink
               to="/"
@@ -57,20 +75,22 @@ const favouritesStore = useFavouritesStore()
               Contact
             </RouterLink>
           </li>
+
           <li>
             <span class="favourites-badge">
-            Favourites: {{ favouritesStore.totalCount }}
+              Favourites: {{ favouritesStore.totalCount }}
             </span>
           </li>
+
           <li>
             <button
+              type="button"
               class="theme-toggle"
               @click="themeStore.toggleDarkMode"
             >
               {{ themeStore.isDarkMode ? '☀️ Light Mode' : '🌙 Dark Mode' }}
             </button>
           </li>
-
         </ul>
       </nav>
 

@@ -803,3 +803,43 @@ h3 {
 .dark-theme .favourites-summary p {
   color: #e5e7eb !important;
 }
+/* =========================
+   SHRINKING MOBILE HEADER
+   ========================= */
+
+.site-header,
+.header-container,
+.logo img,
+.site-header .nav-link,
+.favourites-badge,
+.theme-toggle {
+  transition: all 0.25s ease;
+}
+
+@media (max-width: 600px) {
+
+  .site-header.header-scrolled .header-container {
+    min-height: auto;
+    padding: 0.35rem 0;
+    gap: 0.2rem;
+  }
+
+  .site-header.header-scrolled .logo img {
+    width: 65px;
+  }
+
+  .site-header.header-scrolled nav ul {
+    gap: 0.1rem;
+  }
+
+  .site-header.header-scrolled .nav-link {
+    padding: 0.3rem 0.45rem;
+    font-size: 0.72rem;
+  }
+
+  .site-header.header-scrolled .favourites-badge,
+  .site-header.header-scrolled .theme-toggle {
+    padding: 0.3rem 0.45rem;
+    font-size: 0.72rem;
+  }
+}
