@@ -48,7 +48,7 @@ const featuredPets = [
           to="/pets"
           class="btn"
         >
-          Meet Our Pets
+          Find Your Companion
         </RouterLink>
       </div>
 
@@ -64,6 +64,7 @@ const featuredPets = [
 
   <section class="mission-section">
     <div class="container">
+
       <h2>Our Mission</h2>
 
       <p>
@@ -71,6 +72,7 @@ const featuredPets = [
         engagement in taking care of pets. PawConnect makes it easier for
         people to explore available pets and begin their adoption journey.
       </p>
+
     </div>
   </section>
 

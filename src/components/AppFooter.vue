@@ -4,6 +4,7 @@
 
       <div class="footer-about">
         <h2>PawConnect</h2>
+
         <p>
           Helping people connect with pets and supporting responsible adoption.
         </p>
@@ -11,17 +12,50 @@
 
       <div class="footer-links">
         <h3>Quick Links</h3>
+
         <ul>
-          <li>Home</li>
-          <li>Meet Our Pets</li>
-          <li>Pet Care</li>
+          <li>
+            <RouterLink to="/">
+              Home
+            </RouterLink>
+          </li>
+
+          <li>
+            <RouterLink to="/pets">
+              Meet Our Pets
+            </RouterLink>
+          </li>
+
+          <li>
+            <RouterLink to="/care">
+              Pet Care
+            </RouterLink>
+          </li>
+
+          <li>
+            <RouterLink to="/contact">
+              Contact
+            </RouterLink>
+          </li>
         </ul>
       </div>
 
       <div class="footer-contact">
         <h3>Contact</h3>
-        <p>Email: pawconnect@gmail.com</p>
-        <p>Phone: 03 9000 0000</p>
+
+        <p>
+          Email:
+          <a href="mailto:pawconnect@gmail.com">
+            pawconnect@gmail.com
+          </a>
+        </p>
+
+        <p>
+          Phone:
+          <a href="tel:0390000000">
+            03 9000 0000
+          </a>
+        </p>
       </div>
 
     </div>

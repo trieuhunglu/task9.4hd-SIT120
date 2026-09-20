@@ -1,5 +1,5 @@
 <script setup>
-import { ref } from 'vue'
+import { ref, computed, watch } from 'vue'
 
 defineProps({
   formTitle: {
@@ -10,13 +10,15 @@ defineProps({
 
 const emit = defineEmits(['submit-form'])
 
+/* Available pets */
 const pets = [
-  'Luna',
-  'Mochi',
-  'Oliver',
-  'Max'
+  { name: 'Luna', type: 'Cat' },
+  { name: 'Mochi', type: 'Cat' },
+  { name: 'Oliver', type: 'Cat' },
+  { name: 'Max', type: 'Dog' }
 ]
 
+/* Form data */
 const form = ref({
   fullName: '',
   email: '',
@@ -29,7 +31,26 @@ const form = ref({
 const errors = ref({})
 const successMessage = ref('')
 
+/* Filter pets based on selected pet type */
+const filteredPets = computed(() => {
+  if (!form.value.petType) {
+    return pets
+  }
 
+  return pets.filter(
+    pet => pet.type === form.value.petType
+  )
+})
+
+/* Clear selected pet when pet type changes */
+watch(
+  () => form.value.petType,
+  () => {
+    form.value.selectedPet = ''
+  }
+)
+
+/* Validate form */
 const validateForm = () => {
   errors.value = {}
 
@@ -52,14 +73,14 @@ const validateForm = () => {
     errors.value.age = 'Please enter a valid age of 18 or above.'
   }
 
-  // Selected Pet
-  if (!form.value.selectedPet) {
-    errors.value.selectedPet = 'Please select a pet.'
-  }
-
   // Pet Type
   if (!form.value.petType) {
     errors.value.petType = 'Please select a pet type.'
+  }
+
+  // Selected Pet
+  if (!form.value.selectedPet) {
+    errors.value.selectedPet = 'Please select a pet.'
   }
 
   // Preferences
@@ -71,7 +92,7 @@ const validateForm = () => {
   return Object.keys(errors.value).length === 0
 }
 
-
+/* Reset form */
 const resetForm = () => {
   form.value = {
     fullName: '',
@@ -85,7 +106,7 @@ const resetForm = () => {
   errors.value = {}
 }
 
-
+/* Submit form */
 const handleSubmit = () => {
   if (!validateForm()) {
     successMessage.value = ''
@@ -107,7 +128,6 @@ const handleSubmit = () => {
 }
 </script>
 
-
 <template>
   <section class="adoption-form-section">
     <div class="container">
@@ -120,20 +140,13 @@ const handleSubmit = () => {
         contact you about the next steps.
       </p>
 
-
       <form @submit.prevent="handleSubmit" novalidate>
 
         <!-- Personal Information -->
         <fieldset>
+          <legend>Personal Information</legend>
 
-          <legend>
-            Personal Information
-          </legend>
-
-
-          <!-- Full Name -->
           <div class="form-group">
-
             <label for="full-name">
               Full Name
             </label>
@@ -150,13 +163,9 @@ const handleSubmit = () => {
             >
               {{ errors.fullName }}
             </p>
-
           </div>
 
-
-          <!-- Email -->
           <div class="form-group">
-
             <label for="email">
               Email Address
             </label>
@@ -173,13 +182,9 @@ const handleSubmit = () => {
             >
               {{ errors.email }}
             </p>
-
           </div>
 
-
-          <!-- Age -->
           <div class="form-group">
-
             <label for="age">
               Age
             </label>
@@ -196,65 +201,20 @@ const handleSubmit = () => {
             >
               {{ errors.age }}
             </p>
-
           </div>
-
         </fieldset>
-
 
         <!-- Pet Information -->
         <fieldset>
-
-          <legend>
-            Pet Information
-          </legend>
-
-
-          <!-- Select Pet -->
-          <div class="form-group">
-
-            <label for="selected-pet">
-              Select a Pet
-            </label>
-
-            <select
-              id="selected-pet"
-              v-model="form.selectedPet"
-            >
-
-              <option value="">
-                Choose a pet
-              </option>
-
-              <option
-                v-for="pet in pets"
-                :key="pet"
-                :value="pet"
-              >
-                {{ pet }}
-              </option>
-
-            </select>
-
-            <p
-              v-if="errors.selectedPet"
-              class="validation-message"
-            >
-              {{ errors.selectedPet }}
-            </p>
-
-          </div>
-
+          <legend>Pet Information</legend>
 
           <!-- Pet Type -->
           <div class="form-group">
-
             <span class="form-label">
               Pet Type
             </span>
 
             <div class="radio-group">
-
               <label>
                 <input
                   v-model="form.petType"
@@ -272,7 +232,6 @@ const handleSubmit = () => {
                 >
                 Dog
               </label>
-
             </div>
 
             <p
@@ -281,19 +240,46 @@ const handleSubmit = () => {
             >
               {{ errors.petType }}
             </p>
-
           </div>
 
+          <!-- Select Pet -->
+          <div class="form-group">
+            <label for="selected-pet">
+              Select a Pet
+            </label>
+
+            <select
+              id="selected-pet"
+              v-model="form.selectedPet"
+            >
+              <option value="">
+                Choose a pet
+              </option>
+
+              <option
+                v-for="pet in filteredPets"
+                :key="pet.name"
+                :value="pet.name"
+              >
+                {{ pet.name }}
+              </option>
+            </select>
+
+            <p
+              v-if="errors.selectedPet"
+              class="validation-message"
+            >
+              {{ errors.selectedPet }}
+            </p>
+          </div>
 
           <!-- Preferences -->
           <div class="form-group">
-
             <span class="form-label">
               Preferences
             </span>
 
             <div class="checkbox-group">
-
               <label>
                 <input
                   v-model="form.preferences"
@@ -320,7 +306,6 @@ const handleSubmit = () => {
                 >
                 Active
               </label>
-
             </div>
 
             <p
@@ -329,21 +314,15 @@ const handleSubmit = () => {
             >
               {{ errors.preferences }}
             </p>
-
           </div>
-
         </fieldset>
-
 
         <!-- Submit Button -->
         <div class="form-actions">
-
           <button type="submit">
             Submit Enquiry
           </button>
-
         </div>
-
 
         <!-- Success Message -->
         <p

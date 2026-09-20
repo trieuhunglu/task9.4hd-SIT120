@@ -139,7 +139,7 @@ h3 {
 
 .hero-text .btn {
   border: none;
-  background: #f59e0b;
+  background: #4A90E2;
   color: #ffffff;
   padding: 0.9rem 1.5rem;
   border-radius: 8px;
@@ -432,7 +432,7 @@ h3 {
 
 .form-actions button {
   border: none;
-  background: #f59e0b;
+  background: #4A90E2;
   color: #ffffff;
   padding: 0.85rem 1.5rem;
   border-radius: 8px;
@@ -511,7 +511,29 @@ h3 {
   padding-top: 1rem;
   width: 90%;
 }
+/* Footer links */
+.site-footer .footer-links a,
+.site-footer .footer-links a:visited,
+.site-footer .footer-contact a,
+.site-footer .footer-contact a:visited {
+  color: #e0e7e2;
+  text-decoration: none;
+}
 
+.site-footer .footer-links a:hover,
+.site-footer .footer-contact a:hover {
+  color: #ffffff;
+  text-decoration: underline;
+}
+
+.site-footer .footer-links a.router-link-active {
+  color: #ffffff;
+  font-weight: 700;
+}
+
+.site-footer .footer-links li {
+  margin-bottom: 0.5rem;
+}
 
 /* =========================
    TABLET
