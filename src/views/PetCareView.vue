@@ -102,6 +102,13 @@
 
       </div>
 
+      <RouterLink
+        to="/pets"
+        class="btn"
+      >
+        Adopt your companion now
+      </RouterLink>
+
     </div>
   </section>
 </template>

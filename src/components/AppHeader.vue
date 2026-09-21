@@ -63,10 +63,10 @@ onUnmounted(() => {
           class="mobile-menu-toggle"
           :aria-expanded="isMenuOpen"
           aria-controls="main-navigation"
-          aria-label="Toggle navigation menu"
+          :aria-label="isMenuOpen ? '✕ Close' : '☰ Toggle navigation menu'"
           @click="toggleMenu"
         >
-          {{ isMenuOpen ? '✕ Close' : '☰ Menu' }}
+          {{ isMenuOpen ? '✕ Close' : '☰' }}
         </button>
 
       </div>
