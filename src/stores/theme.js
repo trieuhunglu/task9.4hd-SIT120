@@ -7,7 +7,9 @@ export const useThemeStore = defineStore('theme', {
 
   getters: {
     currentThemeClass: (state) => {
-      return state.isDarkMode ? 'dark-theme' : 'light-theme'
+      return state.isDarkMode
+        ? 'dark-theme'
+        : 'light-theme'
     }
   },
 

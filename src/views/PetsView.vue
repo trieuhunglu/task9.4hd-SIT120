@@ -53,6 +53,7 @@ const pets = [
 
         <p>
           Explore some of the pets currently looking for a loving home.
+          Found your perfect companion? Start an adoption enquiry today.
         </p>
       </div>
 
@@ -73,28 +74,43 @@ const pets = [
             <h2>{{ pet.name }}</h2>
 
             <p>
-              {{ pet.type }} • {{ pet.age }}
+              <strong>Type:</strong> {{ pet.type }}
+            </p>
+
+            <p>
+              <strong>Age:</strong> {{ pet.age }}
             </p>
 
             <p>
               {{ pet.description }}
             </p>
 
-            <button
-              v-if="!favouritesStore.items.some(item => item.id === pet.id)"
-              class="favourite-btn"
-              @click="favouritesStore.addItem(pet)"
-            >
-              Add to Favourites
-            </button>
+            <div class="pet-card-actions">
+              <button
+                v-if="!favouritesStore.items.some(item => item.id === pet.id)"
+                type="button"
+                class="favourite-btn"
+                @click="favouritesStore.addItem(pet)"
+              >
+                Add to Favourites
+              </button>
 
-            <button
-              v-else
-              class="favourite-btn remove"
-              @click="favouritesStore.removeItem(pet.id)"
-            >
-              Remove Favourite
-            </button>
+              <button
+                v-else
+                type="button"
+                class="favourite-btn remove"
+                @click="favouritesStore.removeItem(pet.id)"
+              >
+                Remove Favourite
+              </button>
+
+              <RouterLink
+                to="/contact"
+                class="adopt-pet-btn"
+              >
+                Adopt {{ pet.name }}
+              </RouterLink>
+            </div>
           </div>
         </article>
 
@@ -111,13 +127,24 @@ const pets = [
           Total selected: {{ favouritesStore.totalCount }}
         </p>
 
-        <button
-          v-if="favouritesStore.totalCount > 0"
-          class="clear-favourites-btn"
-          @click="favouritesStore.resetStore"
-        >
-          Clear All Favourites
-        </button>
+        <div class="favourites-summary-actions">
+          <RouterLink
+            v-if="favouritesStore.totalCount > 0"
+            to="/favourites"
+            class="view-favourites-btn"
+          >
+            View My Favourites
+          </RouterLink>
+
+          <button
+            v-if="favouritesStore.totalCount > 0"
+            type="button"
+            class="clear-favourites-btn"
+            @click="favouritesStore.resetStore"
+          >
+            Clear All Favourites
+          </button>
+        </div>
       </section>
 
     </div>

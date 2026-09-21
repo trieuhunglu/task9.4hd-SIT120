@@ -536,10 +536,25 @@ h3 {
 }
 
 /* =========================
+   RESPONSIVE NAV DEFAULTS
+   ========================= */
+
+.mobile-menu-toggle {
+  display: none;
+}
+
+.mobile-header-row {
+  display: contents;
+}
+
+/* =========================
    TABLET
+   768px - 1024px
    ========================= */
 
 @media (min-width: 768px) and (max-width: 1024px) {
+
+  /* Header */
 
   .header-container {
     flex-direction: column;
@@ -547,13 +562,44 @@ h3 {
     gap: 0.75rem;
   }
 
+  .mobile-header-row {
+    display: contents;
+  }
+
+  .mobile-menu-toggle {
+    display: none;
+  }
+
+  .site-header nav {
+    display: block;
+    width: 100%;
+  }
+
   .site-header nav ul {
+    display: flex;
+    flex-direction: row;
     flex-wrap: wrap;
     justify-content: center;
+    align-items: center;
+    gap: 0.5rem;
   }
+
+  .site-header nav li {
+    width: auto;
+  }
+
+  .site-header nav .nav-link,
+  .favourites-badge,
+  .theme-toggle {
+    width: auto;
+  }
+
+
+  /* Hero */
 
   .hero-content {
     grid-template-columns: 1fr;
+    gap: 2rem;
   }
 
   .hero-text {
@@ -565,13 +611,27 @@ h3 {
     margin-right: auto;
   }
 
+  .hero-image {
+    max-width: 700px;
+    margin: 0 auto;
+  }
+
+
+  /* Pet Grid */
+
   .pet-grid {
     grid-template-columns: repeat(2, 1fr);
   }
 
+
+  /* Pet Care Grid */
+
   .care-grid {
     grid-template-columns: repeat(2, 1fr);
   }
+
+
+  /* Favourites Summary */
 
   .favourites-summary {
     display: grid;
@@ -584,8 +644,32 @@ h3 {
     grid-column: 1 / -1;
   }
 
+  .favourites-summary-actions {
+    grid-column: 1 / -1;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    gap: 1rem;
+  }
+
+
+  /* Adoption Form */
+
+  .adoption-form-section > .container {
+    max-width: 750px;
+  }
+
+  .radio-group,
+  .checkbox-group {
+    flex-direction: row;
+    flex-wrap: wrap;
+  }
+
+
+  /* Footer */
+
   .footer-container {
-    grid-template-columns: 1fr 1fr;
+    grid-template-columns: repeat(2, 1fr);
   }
 }
 
@@ -596,57 +680,75 @@ h3 {
 
 @media (max-width: 767px) {
 
-  /* Header */
+  /* =========================
+     MOBILE HEADER
+     ========================= */
 
   .header-container {
     flex-direction: column;
-    padding: 0.8rem 0;
-    gap: 0.75rem;
+    padding: 0.6rem 0;
+    gap: 0;
+  }
+
+  .mobile-header-row {
+    width: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
   }
 
   .logo img {
     width: 110px;
   }
 
+  .mobile-menu-toggle {
+    display: block;
+    border: 2px solid #ffffff;
+    background: transparent;
+    color: #ffffff;
+    padding: 0.55rem 0.8rem;
+    border-radius: 8px;
+    font-weight: 700;
+    cursor: pointer;
+  }
+
+  .mobile-menu-toggle:hover {
+    background: #ffffff;
+    color: #4caf50;
+  }
+
+  /* Navigation hidden by default on mobile */
   .site-header nav {
+    display: none;
     width: 100%;
+    padding-top: 0.6rem;
+  }
+
+  /* Vue adds this class when Menu is clicked */
+  .site-header nav.mobile-menu-open {
+    display: block;
   }
 
   .site-header nav ul {
+    display: flex;
     flex-direction: column;
-    justify-content: center;
     align-items: stretch;
     gap: 0.4rem;
     width: 100%;
   }
 
   .site-header nav li {
-  width: 100%;
-}
-
-/* Keep favourites and dark mode more compact */
-.site-header nav li:nth-last-child(2),
-.site-header nav li:last-child {
-  width: calc(50% - 0.2rem);
-}
-
-.site-header nav ul {
-  flex-direction: row;
-  justify-content: center;
-  align-items: stretch;
-  flex-wrap: wrap;
-  gap: 0.4rem;
-  width: 100%;
-}
+    width: 100%;
+  }
 
   .site-header nav .nav-link,
-  .theme-toggle,
-  .favourites-badge {
+  .favourites-badge,
+  .theme-toggle {
     width: 100%;
     display: flex;
     align-items: center;
     justify-content: center;
-    padding: 0.6rem 0.75rem;
+    padding: 0.65rem 0.75rem;
     font-size: 0.9rem;
   }
 
@@ -864,4 +966,148 @@ h3 {
     padding: 0.3rem 0.45rem;
     font-size: 0.72rem;
   }
+}
+/* =========================
+   FAVOURITES PAGE
+   ========================= */
+
+.favourites-badge {
+  text-decoration: none;
+}
+
+.favourites-badge:hover {
+  background: #ffffff;
+  color: #4caf50;
+}
+
+.favourites-page-link,
+.adopt-favourite-btn {
+  display: inline-block;
+  background: #4A90E2;
+  color: #ffffff;
+  text-decoration: none;
+  padding: 0.8rem 1.2rem;
+  border-radius: 8px;
+  font-weight: 700;
+  transition: 0.2s ease;
+}
+
+.favourites-page-link:hover,
+.adopt-favourite-btn:hover {
+  opacity: 0.9;
+}
+
+.favourites-page-actions {
+  margin-top: 2rem;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 1rem;
+  flex-wrap: wrap;
+}
+
+.favourites-page-actions .clear-favourites-btn {
+  margin-top: 0;
+}
+
+@media (max-width: 767px) {
+  .favourites-page-actions {
+    flex-direction: column;
+  }
+
+  .favourites-page-link,
+  .adopt-favourite-btn,
+  .favourites-page-actions .clear-favourites-btn {
+    width: 100%;
+    text-align: center;
+  }
+}
+/* =========================
+   PET ADOPTION CTA
+   ========================= */
+
+.pet-card-actions {
+  margin-top: auto;
+  display: flex;
+  flex-direction: column;
+  gap: 0.7rem;
+}
+
+.pet-card-actions .favourite-btn {
+  margin-top: 0;
+}
+
+.adopt-pet-btn,
+.view-favourites-btn {
+  display: block;
+  padding: 0.75rem 1rem;
+  border-radius: 8px;
+  background: #4A90E2;
+  color: #ffffff;
+  text-decoration: none;
+  text-align: center;
+  font-weight: 700;
+  transition: 0.2s ease;
+}
+
+.adopt-pet-btn:hover,
+.view-favourites-btn:hover {
+  opacity: 0.9;
+}
+
+.favourites-summary-actions {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  flex-wrap: wrap;
+  margin-top: 1rem;
+}
+
+.favourites-summary-actions .clear-favourites-btn {
+  margin-top: 0;
+}
+
+@media (max-width: 767px) {
+  .favourites-summary-actions {
+    flex-direction: column;
+    align-items: stretch;
+  }
+
+  .view-favourites-btn,
+  .favourites-summary-actions .clear-favourites-btn {
+    width: 100%;
+    text-align: center;
+  }
+}
+.additional-pet-section {
+  margin: 1.25rem 0;
+  padding: 1rem;
+  border: 1px solid #d6d6d6;
+  border-radius: 8px;
+}
+
+.additional-pet-section h3 {
+  margin-bottom: 1rem;
+}
+
+.additional-pet-actions {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  flex-wrap: wrap;
+}
+
+.additional-pet-actions .add-pet-btn,
+.additional-pet-actions .remove-second-pet-btn {
+  margin-top: 0;
+}
+
+.all-pets-selected {
+  margin: 1rem 0;
+  font-size: 0.9rem;
+  font-weight: 600;
+}
+
+.dark-theme .additional-pet-section {
+  border-color: #4b554e;
 }

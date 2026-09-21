@@ -8,9 +8,22 @@ const themeStore = useThemeStore()
 const favouritesStore = useFavouritesStore()
 
 const isScrolled = ref(false)
+const isMenuOpen = ref(false)
 
 function handleScroll() {
   isScrolled.value = window.scrollY > 80
+}
+
+function toggleMenu() {
+  isMenuOpen.value = !isMenuOpen.value
+}
+
+function closeMenu() {
+  isMenuOpen.value = false
+}
+
+function toggleTheme() {
+  themeStore.toggleDarkMode()
 }
 
 onMounted(() => {
@@ -29,21 +42,48 @@ onUnmounted(() => {
   >
     <div class="container header-container">
 
-      <div class="logo">
-        <RouterLink to="/">
-          <img
-            src="../assets/logo.png"
-            alt="PawConnect Logo"
+      <!-- Logo + Mobile Menu Button -->
+      <div class="mobile-header-row">
+
+        <div class="logo">
+          <RouterLink
+            to="/"
+            @click="closeMenu"
           >
-        </RouterLink>
+            <img
+              src="../assets/logo.png"
+              alt="PawConnect Logo"
+            >
+          </RouterLink>
+        </div>
+
+        <!-- Only displayed on mobile through CSS -->
+        <button
+          type="button"
+          class="mobile-menu-toggle"
+          :aria-expanded="isMenuOpen"
+          aria-controls="main-navigation"
+          aria-label="Toggle navigation menu"
+          @click="toggleMenu"
+        >
+          {{ isMenuOpen ? '✕ Close' : '☰ Menu' }}
+        </button>
+
       </div>
 
-      <nav aria-label="Main navigation">
+      <!-- Main Navigation -->
+      <nav
+        id="main-navigation"
+        :class="{ 'mobile-menu-open': isMenuOpen }"
+        aria-label="Main navigation"
+      >
         <ul>
+
           <li>
             <RouterLink
               to="/"
               class="nav-link"
+              @click="closeMenu"
             >
               Home
             </RouterLink>
@@ -53,6 +93,7 @@ onUnmounted(() => {
             <RouterLink
               to="/pets"
               class="nav-link"
+              @click="closeMenu"
             >
               Meet Our Pets
             </RouterLink>
@@ -62,6 +103,7 @@ onUnmounted(() => {
             <RouterLink
               to="/care"
               class="nav-link"
+              @click="closeMenu"
             >
               Pet Care
             </RouterLink>
@@ -71,26 +113,38 @@ onUnmounted(() => {
             <RouterLink
               to="/contact"
               class="nav-link"
+              @click="closeMenu"
             >
               Contact
             </RouterLink>
           </li>
 
+          <!-- Clickable Favourites -->
           <li>
-            <span class="favourites-badge">
+            <RouterLink
+              to="/favourites"
+              class="favourites-badge"
+              @click="closeMenu"
+            >
               Favourites: {{ favouritesStore.totalCount }}
-            </span>
+            </RouterLink>
           </li>
 
+          <!-- Pinia Theme Toggle -->
           <li>
             <button
               type="button"
               class="theme-toggle"
-              @click="themeStore.toggleDarkMode"
+              @click="toggleTheme"
             >
-              {{ themeStore.isDarkMode ? '☀️ Light Mode' : '🌙 Dark Mode' }}
+              {{
+                themeStore.isDarkMode
+                  ? '☀️ Light Mode'
+                  : '🌙 Dark Mode'
+              }}
             </button>
           </li>
+
         </ul>
       </nav>
 

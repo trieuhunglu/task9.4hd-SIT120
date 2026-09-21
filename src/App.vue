@@ -7,6 +7,7 @@ import AppHeader from './components/AppHeader.vue'
 import AppFooter from './components/AppFooter.vue'
 
 const submittedData = ref(null)
+
 const themeStore = useThemeStore()
 const route = useRoute()
 
@@ -34,6 +35,7 @@ function handleFormSubmit(data) {
         />
       </RouterView>
 
+      <!-- Customer Acknowledgement -->
       <section
         v-if="submittedData && route.path === '/contact'"
         class="acknowledgement-card"
@@ -49,23 +51,41 @@ function handleFormSubmit(data) {
 
         <ul>
           <li>
-            Email:
-            {{ submittedData.email }}
+            Email: {{ submittedData.email }}
           </li>
 
           <li>
-            Age:
-            {{ submittedData.age }}
+            Age: {{ submittedData.age }}
           </li>
 
+          <!-- All Selected Pets -->
           <li>
-            Selected Pet:
+            Selected Pets:
             {{ submittedData.selectedPet }}
+
+            <template
+              v-for="(additionalPet, index) in submittedData.additionalPets"
+              :key="`pet-${index}`"
+            >
+              <span v-if="additionalPet.pet">
+                , {{ additionalPet.pet }}
+              </span>
+            </template>
           </li>
 
+          <!-- All Pet Types -->
           <li>
-            Pet Type:
+            Pet Types:
             {{ submittedData.petType }}
+
+            <template
+              v-for="(additionalPet, index) in submittedData.additionalPets"
+              :key="`type-${index}`"
+            >
+              <span v-if="additionalPet.pet">
+                , {{ additionalPet.type }}
+              </span>
+            </template>
           </li>
 
           <li>
