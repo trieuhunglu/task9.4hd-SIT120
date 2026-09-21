@@ -443,7 +443,186 @@ h3 {
 .form-actions button:hover {
   opacity: 0.9;
 }
+/* =========================
+   FORM USABILITY
+   ========================= */
 
+/* Required field information */
+
+.required-note {
+  margin: 0.75rem 0 1.5rem;
+  font-size: 0.95rem;
+  color: #555555;
+}
+
+.required-star {
+  color: #d32f2f;
+  font-weight: 700;
+}
+
+.optional-label {
+  color: #666666;
+  font-size: 0.9rem;
+  font-weight: 400;
+}
+
+
+/* Helper text */
+
+.field-hint {
+  margin: 0.25rem 0 0.65rem;
+  font-size: 0.9rem;
+  line-height: 1.4;
+  color: #666666;
+}
+
+
+/* Placeholder text */
+
+input::placeholder {
+  color: #888888;
+  opacity: 1;
+}
+
+
+/* Add another pet */
+
+.add-pet-section {
+  margin: 0.5rem 0 1.5rem;
+}
+
+.add-pet-btn {
+  padding: 0.7rem 1rem;
+  border: 2px solid #4A90E2;
+  border-radius: 8px;
+  background: transparent;
+  color: #4A90E2;
+  font-weight: 700;
+  cursor: pointer;
+  transition: 0.2s ease;
+}
+
+.add-pet-btn:hover {
+  background: #4A90E2;
+  color: #ffffff;
+}
+
+
+/* Additional pet card */
+
+.additional-pet-section {
+  margin: 1.25rem 0;
+  padding: 1rem;
+  border: 1px solid #d6d6d6;
+  border-radius: 8px;
+}
+
+.additional-pet-section h3 {
+  margin: 0 0 1rem;
+}
+
+
+/* Additional pet buttons */
+
+.additional-pet-actions {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  flex-wrap: wrap;
+}
+
+.additional-pet-actions .add-pet-btn,
+.additional-pet-actions .remove-second-pet-btn {
+  margin-top: 0;
+}
+
+.remove-second-pet-btn {
+  padding: 0.7rem 1rem;
+  border: none;
+  border-radius: 8px;
+  background: #eeeeee;
+  color: #333333;
+  font-weight: 600;
+  cursor: pointer;
+  transition: 0.2s ease;
+}
+
+.remove-second-pet-btn:hover {
+  background: #dddddd;
+}
+
+
+/* All pets selected */
+
+.all-pets-selected {
+  margin: 1rem 0;
+  font-size: 0.9rem;
+  font-weight: 600;
+}
+
+
+/* =========================
+   DARK THEME FORM HELP
+   ========================= */
+
+.dark-theme .required-note,
+.dark-theme .field-hint,
+.dark-theme .optional-label {
+  color: #d1d5db;
+}
+
+.dark-theme .required-star {
+  color: #ff8a80;
+}
+
+.dark-theme input::placeholder {
+  color: #aeb8b1;
+}
+
+.dark-theme .additional-pet-section {
+  border-color: #4b554e;
+}
+
+.dark-theme .add-pet-btn {
+  color: #7ab8ff;
+  border-color: #7ab8ff;
+}
+
+.dark-theme .add-pet-btn:hover {
+  background: #7ab8ff;
+  color: #181c19;
+}
+
+.dark-theme .remove-second-pet-btn {
+  background: #37403a;
+  color: #ffffff;
+}
+
+.dark-theme .remove-second-pet-btn:hover {
+  background: #465149;
+}
+
+
+/* =========================
+   MOBILE FORM HELP
+   ========================= */
+
+@media (max-width: 767px) {
+
+  .field-hint {
+    font-size: 0.85rem;
+  }
+
+  .additional-pet-actions {
+    flex-direction: column;
+    align-items: stretch;
+  }
+
+  .additional-pet-actions .add-pet-btn,
+  .additional-pet-actions .remove-second-pet-btn {
+    width: 100%;
+  }
+}
 
 /* =========================
    CUSTOMER ACKNOWLEDGEMENT
@@ -1078,36 +1257,4 @@ h3 {
     width: 100%;
     text-align: center;
   }
-}
-.additional-pet-section {
-  margin: 1.25rem 0;
-  padding: 1rem;
-  border: 1px solid #d6d6d6;
-  border-radius: 8px;
-}
-
-.additional-pet-section h3 {
-  margin-bottom: 1rem;
-}
-
-.additional-pet-actions {
-  display: flex;
-  align-items: center;
-  gap: 0.75rem;
-  flex-wrap: wrap;
-}
-
-.additional-pet-actions .add-pet-btn,
-.additional-pet-actions .remove-second-pet-btn {
-  margin-top: 0;
-}
-
-.all-pets-selected {
-  margin: 1rem 0;
-  font-size: 0.9rem;
-  font-weight: 600;
-}
-
-.dark-theme .additional-pet-section {
-  border-color: #4b554e;
 }

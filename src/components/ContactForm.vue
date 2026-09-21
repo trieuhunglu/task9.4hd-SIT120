@@ -32,7 +32,7 @@ const form = ref({
 const errors = ref({})
 const successMessage = ref('')
 
-/* First pet filtering */
+/* Filter pets for the first pet */
 const filteredPets = computed(() => {
   if (!form.value.petType) {
     return pets
@@ -51,7 +51,7 @@ const selectedPetNames = computed(() => {
   ].filter(Boolean)
 })
 
-/* Check if more pets can be added */
+/* Check whether another pet can be added */
 const canAddMorePets = computed(() => {
   return selectedPetNames.value.length < pets.length
 })
@@ -85,7 +85,7 @@ const getAvailablePets = (currentIndex) => {
   )
 }
 
-/* Clear first pet when first type changes */
+/* Clear first pet when first pet type changes */
 watch(
   () => form.value.petType,
   () => {
@@ -110,7 +110,7 @@ const removeAdditionalPet = (index) => {
   form.value.additionalPets.splice(index, 1)
 }
 
-/* Change additional pet type */
+/* Clear additional pet when its type changes */
 const handleAdditionalPetTypeChange = (index) => {
   form.value.additionalPets[index].pet = ''
 }
@@ -144,7 +144,7 @@ const validateForm = () => {
       'Please enter a valid age of 18 or above.'
   }
 
-  // First Pet Type
+  // Pet Type
   if (!form.value.petType) {
     errors.value.petType =
       'Please select a pet type.'
@@ -189,9 +189,11 @@ const handleSubmit = () => {
 
   emit('submit-form', {
     ...form.value,
+
     additionalPets: form.value.additionalPets.map(
       item => ({ ...item })
     ),
+
     preferences: [...form.value.preferences]
   })
 
@@ -217,18 +219,29 @@ const handleSubmit = () => {
         contact you about the next steps.
       </p>
 
+      <!-- Upfront form expectations -->
       <p class="required-note">
         <span class="required-star">*</span>
         All fields marked with * are required.
       </p>
 
-      <form @submit.prevent="handleSubmit" novalidate>
+      <form
+        @submit.prevent="handleSubmit"
+        novalidate
+      >
 
-        <!-- Personal Information -->
+        <!-- =========================
+             PERSONAL INFORMATION
+             ========================= -->
         <fieldset>
-          <legend>Personal Information</legend>
 
+          <legend>
+            Personal Information
+          </legend>
+
+          <!-- Full Name -->
           <div class="form-group">
+
             <label for="full-name">
               Full Name
               <span class="required-star">*</span>
@@ -238,7 +251,12 @@ const handleSubmit = () => {
               id="full-name"
               v-model="form.fullName"
               type="text"
+              placeholder="e.g. Alex Smith"
             >
+
+            <p class="field-hint">
+              Enter your first and last name.
+            </p>
 
             <p
               v-if="errors.fullName"
@@ -246,9 +264,12 @@ const handleSubmit = () => {
             >
               {{ errors.fullName }}
             </p>
+
           </div>
 
+          <!-- Email -->
           <div class="form-group">
+
             <label for="email">
               Email Address
               <span class="required-star">*</span>
@@ -258,7 +279,13 @@ const handleSubmit = () => {
               id="email"
               v-model="form.email"
               type="email"
+              placeholder="e.g. alex@example.com"
             >
+
+            <p class="field-hint">
+              We will use this email to contact you
+              about your adoption enquiry.
+            </p>
 
             <p
               v-if="errors.email"
@@ -266,9 +293,12 @@ const handleSubmit = () => {
             >
               {{ errors.email }}
             </p>
+
           </div>
 
+          <!-- Age -->
           <div class="form-group">
+
             <label for="age">
               Age
               <span class="required-star">*</span>
@@ -279,7 +309,12 @@ const handleSubmit = () => {
               v-model.number="form.age"
               type="number"
               min="18"
+              placeholder="18+"
             >
+
+            <p class="field-hint">
+              You must be 18 or older.
+            </p>
 
             <p
               v-if="errors.age"
@@ -287,21 +322,35 @@ const handleSubmit = () => {
             >
               {{ errors.age }}
             </p>
+
           </div>
+
         </fieldset>
 
-        <!-- Pet Information -->
+
+        <!-- =========================
+             PET INFORMATION
+             ========================= -->
         <fieldset>
-          <legend>Pet Information</legend>
+
+          <legend>
+            Pet Information
+          </legend>
 
           <!-- First Pet Type -->
           <div class="form-group">
+
             <span class="form-label">
               Pet Type
               <span class="required-star">*</span>
             </span>
 
+            <p class="field-hint">
+              Choose the type of pet you are interested in.
+            </p>
+
             <div class="radio-group">
+
               <label>
                 <input
                   v-model="form.petType"
@@ -319,6 +368,7 @@ const handleSubmit = () => {
                 >
                 Dog
               </label>
+
             </div>
 
             <p
@@ -327,19 +377,27 @@ const handleSubmit = () => {
             >
               {{ errors.petType }}
             </p>
+
           </div>
+
 
           <!-- First Pet -->
           <div class="form-group">
+
             <label for="selected-pet">
               Select a Pet
               <span class="required-star">*</span>
             </label>
 
+            <p class="field-hint">
+              Select the pet you would like to enquire about.
+            </p>
+
             <select
               id="selected-pet"
               v-model="form.selectedPet"
             >
+
               <option value="">
                 Choose a pet
               </option>
@@ -351,6 +409,7 @@ const handleSubmit = () => {
               >
                 {{ pet.name }}
               </option>
+
             </select>
 
             <p
@@ -359,9 +418,11 @@ const handleSubmit = () => {
             >
               {{ errors.selectedPet }}
             </p>
+
           </div>
 
-          <!-- Initial Add Button -->
+
+          <!-- Initial Add Another Pet Button -->
           <div
             v-if="
               form.selectedPet &&
@@ -370,6 +431,12 @@ const handleSubmit = () => {
             "
             class="add-pet-section"
           >
+
+            <p class="field-hint">
+              Interested in more than one pet?
+              You can include them in the same enquiry.
+            </p>
+
             <button
               type="button"
               class="add-pet-btn"
@@ -377,28 +444,41 @@ const handleSubmit = () => {
             >
               + Add Another Pet
             </button>
+
           </div>
 
-          <!-- Additional Pets -->
+
+          <!-- =========================
+               ADDITIONAL PETS
+               ========================= -->
           <div
             v-for="(additionalPet, index) in form.additionalPets"
             :key="index"
             class="additional-pet-section"
           >
+
             <h3>
               Additional Pet {{ index + 1 }}
+
               <span class="optional-label">
                 (Optional)
               </span>
             </h3>
 
+
             <!-- Additional Pet Type -->
             <div class="form-group">
+
               <span class="form-label">
                 Pet Type
               </span>
 
+              <p class="field-hint">
+                Choose Cat or Dog for this additional pet.
+              </p>
+
               <div class="radio-group">
+
                 <label>
                   <input
                     v-model="additionalPet.type"
@@ -422,14 +502,18 @@ const handleSubmit = () => {
                   >
                   Dog
                 </label>
+
               </div>
+
             </div>
+
 
             <!-- Additional Pet Dropdown -->
             <div
               v-if="additionalPet.type"
               class="form-group"
             >
+
               <label :for="`additional-pet-${index}`">
                 Select Pet
               </label>
@@ -438,6 +522,7 @@ const handleSubmit = () => {
                 :id="`additional-pet-${index}`"
                 v-model="additionalPet.pet"
               >
+
                 <option value="">
                   Choose another pet
                 </option>
@@ -449,10 +534,13 @@ const handleSubmit = () => {
                 >
                   {{ pet.name }}
                 </option>
+
               </select>
+
             </div>
 
-            <!-- Additional Pet Buttons -->
+
+            <!-- Additional Pet Actions -->
             <div class="additional-pet-actions">
 
               <button
@@ -477,9 +565,11 @@ const handleSubmit = () => {
               </button>
 
             </div>
+
           </div>
 
-          <!-- All pets selected message -->
+
+          <!-- All pets selected -->
           <p
             v-if="
               form.selectedPet &&
@@ -490,14 +580,22 @@ const handleSubmit = () => {
             All available pets have been selected.
           </p>
 
+
           <!-- Preferences -->
           <div class="form-group">
+
             <span class="form-label">
               Preferences
               <span class="required-star">*</span>
             </span>
 
+            <p class="field-hint">
+              Select at least one preference.
+              You may select more than one.
+            </p>
+
             <div class="checkbox-group">
+
               <label>
                 <input
                   v-model="form.preferences"
@@ -524,6 +622,7 @@ const handleSubmit = () => {
                 >
                 Active
               </label>
+
             </div>
 
             <p
@@ -532,17 +631,23 @@ const handleSubmit = () => {
             >
               {{ errors.preferences }}
             </p>
+
           </div>
 
         </fieldset>
 
-        <!-- Submit -->
+
+        <!-- Submit Button -->
         <div class="form-actions">
+
           <button type="submit">
             Submit Enquiry
           </button>
+
         </div>
 
+
+        <!-- Success Message -->
         <p
           v-if="successMessage"
           class="success-message"
@@ -551,6 +656,7 @@ const handleSubmit = () => {
         </p>
 
       </form>
+
     </div>
   </section>
 </template>
